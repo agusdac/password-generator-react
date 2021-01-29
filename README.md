@@ -9,3 +9,7 @@ In the project directory, you can run:
 ### `npm start`
 
 It will start the application on port 3000.
+
+## Production
+
+The project was uploaded to Netlify at: https://password-generator-react-js.netlify.app/
