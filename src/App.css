@@ -1,38 +1,91 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+		"Lucida Sans", Arial, sans-serif;
+}
+
 .App {
-  text-align: center;
+	background-color: #f1faff;
+	min-height: 100vh;
+	height: 100%;
+	display: flex;
+	align-items: center;
+}
+.container {
+	width: 350px;
+	margin: 0 auto;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.generator {
+	background-color: #96cbfb;
+	border-radius: 4px;
+	box-shadow: 0px 2px 10px rgba(255, 255, 255, 0.2);
+	padding: 20px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.generator h2 {
+	color: #3a4856;
+	margin-bottom: 20px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.password-container {
+	display: flex;
+	background-color: rgba(0, 0, 0, 0.4);
+	border-radius: 4px;
+	padding: 13px 3px;
+	height: 46px;
+	margin-bottom: 15px;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.password-container p {
+	margin-left: 20px;
+	text-align: center;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.copy-button {
+	background-color: #9eadbd;
+	color: white;
+	border: none;
+	height: 40px;
+	padding: 10px;
+	cursor: pointer;
+	border-radius: 4px;
+}
+
+.form-group {
+	display: flex;
+	justify-content: space-between;
+	color: #3a4856;
+	margin-bottom: 15px;
+}
+.generator-button {
+	background-color: #9eadbd;
+	border: none;
+	border-radius: 4px;
+	display: block;
+	width: 100%;
+	padding: 10px;
+	color: white;
+	font-size: 17px;
+	cursor: pointer;
+}
+
+.error-container {
+	display: flex;
+	align-items: center;
+	padding: 10px;
+	border: 2px solid #f43e3e;
+	border-radius: 4px;
+	margin-bottom: 15px;
+	background-color: #c3d6eb;
+}
+.error {
+	color: #d90d0d;
+	font-size: 14px;
 }
