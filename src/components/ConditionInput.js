@@ -8,7 +8,7 @@ export default function ConditionInput({ label, id, value, onChange }) {
         id={id}
         type="checkbox"
         name={id}
-        value={value}
+        checked={value}
         onChange={onChange}
       />
     </div>

@@ -1,17 +1,22 @@
 import React, { useState } from "react"
+import LocalizedStrings from "react-localization"
 import { lowercase, numbers, symbols, uppercase } from "../utils/characters"
 import ConditionInput from "./ConditionInput"
 import ErrorAlert from "./ErrorAlert"
 import NumberInput from "./NumberInput"
+import strings from '../utils/localizedStrings'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-export default function PasswordGenerator() {
+export default function PasswordGenerator({language="es"}) {
     const [password, setPassword] = useState("")
     const [length, setLength] = useState(20)
-    const [containsUppercase, setContainsUppercase] = useState(false)
-    const [containsLowercase, setContainsLowercase] = useState(false)
-    const [containsNumbers, setContainsNumbers] = useState(false)
-    const [containsSymbols, setContainsSymbols] = useState(false)
+    const [containsUppercase, setContainsUppercase] = useState(true)
+    const [containsLowercase, setContainsLowercase] = useState(true)
+    const [containsNumbers, setContainsNumbers] = useState(true)
+    const [containsSymbols, setContainsSymbols] = useState(true)
     const [error, setError] = useState("")
+    const localizedStrings = new LocalizedStrings(strings)
 
     const generateCharacterList = () => {
         let characterList = ""
@@ -29,11 +34,9 @@ export default function PasswordGenerator() {
             !containsNumbers &&
             !containsSymbols
         if (noneChecked) {
-            setError("Please, check at least one of the boxes.")
+            setError(localizedStrings.checkError)
         } else if (length < 6 || length > 25) {
-            setError(
-                "The length of the password must be between 6 and 25 characters.",
-            )
+            setError(localizedStrings.lengthError)
         } else {
             let characterList = generateCharacterList()
             let password = ""
@@ -49,19 +52,37 @@ export default function PasswordGenerator() {
     }
 
     const copyToClipboard = () => {
-        const newTextArea = document.createElement("textarea")
-        newTextArea.innerHTML = password
-        document.body.append(newTextArea)
-        newTextArea.select()
-        document.execCommand("copy")
-        newTextArea.remove()
+        if (password === '') {
+            setError(localizedStrings.emptyError)
+        } else {
+            const newTextArea = document.createElement("textarea")
+            newTextArea.innerHTML = password
+            document.body.append(newTextArea)
+            newTextArea.select()
+            document.execCommand("copy")
+            newTextArea.remove()
+            notify(localizedStrings.copied)
+        }
     }
 
+    const notify = message => {
+        toast.info(message, {
+            position: "top-center",
+            autoClose: 4000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+        });
+    }
+
+    localizedStrings.setLanguage(language)
     return (
         <div className="container">
             <div className="generator">
                 <div>
-                    <h2>Password Generator</h2>
+                    <h2>{localizedStrings.title}</h2>
                 </div>
                 <div className="password-container">
                     <p>{password}</p>
@@ -72,7 +93,7 @@ export default function PasswordGenerator() {
                 {error && <ErrorAlert error={error} />}
                 <NumberInput
                     id="password-length"
-                    label="Password Length"
+                    label={localizedStrings.length}
                     max="25"
                     min="6"
                     value={length}
@@ -80,25 +101,25 @@ export default function PasswordGenerator() {
                 />
                 <ConditionInput
                     id="password-uppercase"
-                    label="Includes uppercase"
+                    label={localizedStrings.uppercase}
                     value={containsUppercase}
                     onChange={(e) => setContainsUppercase(e.target.checked)}
                 />
                 <ConditionInput
                     id="password-lowercase"
-                    label="Includes lowercase"
+                    label={localizedStrings.lowercase}
                     value={containsLowercase}
                     onChange={(e) => setContainsLowercase(e.target.checked)}
                 />
                 <ConditionInput
                     id="password-numbers"
-                    label="Includes numbers"
+                    label={localizedStrings.numbers}
                     value={containsNumbers}
                     onChange={(e) => setContainsNumbers(e.target.checked)}
                 />
                 <ConditionInput
                     id="password-symbols"
-                    label="Includes symbols"
+                    label={localizedStrings.symbols}
                     value={containsSymbols}
                     onChange={(e) => setContainsSymbols(e.target.checked)}
                 />
@@ -107,9 +128,19 @@ export default function PasswordGenerator() {
                         className="generator-button"
                         onClick={generatePassword}
                     >
-                        Generate Password
+                        {localizedStrings.generate}
                     </button>
                 </div>
+                <ToastContainer
+                    position="top-center"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick    
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover/>
             </div>
         </div>
     )
